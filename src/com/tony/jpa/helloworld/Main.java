@@ -1,6 +1,8 @@
 package com.tony.jpa.helloworld;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,9 +14,15 @@ public class Main {
 
 		// 1. Create EntityManagerFactor
 		String persistenceUnitName = "jpa-1";
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnitName);
+		
+		Map<String, Object> properites = new HashMap<>();
+		properites.put("hibernate.show_sql", true);
+		
+		EntityManagerFactory entityManagerFactory = 
+//				Persistence.createEntityManagerFactory(persistenceUnitName);
+				Persistence.createEntityManagerFactory(persistenceUnitName, properites);
 
-		// 2. Create EntityManger
+		// 2. Create EntityManger. Similar with Hibernate's SessionFactory
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 		// 3. Open transaction

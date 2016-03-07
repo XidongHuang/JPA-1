@@ -27,9 +27,10 @@ public class Customer {
 	private Date brith;
 	
 
-	@TableGenerator(name="ID_GENERATOR", table="jpa_id_generators",pkColumnName="PK_NAME",pkColumnValue="CUSTOMER_ID",
-			valueColumnName="PK_VALUE", allocationSize=100)
-	@GeneratedValue(strategy=GenerationType.TABLE, generator="ID_GENERATOR")
+//	@TableGenerator(name="ID_GENERATOR", table="jpa_id_generators",pkColumnName="PK_NAME",pkColumnValue="CUSTOMER_ID",
+//			valueColumnName="PK_VALUE", allocationSize=100)
+//	@GeneratedValue(strategy=GenerationType.TABLE, generator="ID_GENERATOR")
+	@GeneratedValue
 	@Id
 	public Integer getId() {
 		return id;
@@ -93,6 +94,13 @@ public class Customer {
 		
 		return "lastName: " + lastName + ", email: " + email;
 		
+	}
+
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", lastName=" + lastName + ", email=" + email + ", age=" + age + ", createdTime="
+				+ createdTime + ", brith=" + brith + "]";
 	}
 	
 
