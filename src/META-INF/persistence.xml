@@ -4,6 +4,9 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="jpa-1" transaction-type="RESOURCE_LOCAL">
 
+
+
+
 		<!-- Configure what kind of ORM product will be used 1. The configuration 
 			is the instance of "javax.persistence.spi.PersistenceProvider" interface 
 			2. If there is just only one JPS product in JPA project, then it is unneccessary 
@@ -16,9 +19,23 @@
 
 		<class>com.tony.jpa.helloworld.Department</class>
 		<class>com.tony.jpa.helloworld.Manager</class>
-		
+
 		<class>com.tony.jpa.helloworld.Item</class>
 		<class>com.tony.jpa.helloworld.Category</class>
+
+		<!-- 
+		
+			The strategy of configuring second cache
+			ALL: All entities will be stored in cache
+			NONE: All of entities will not be stored in cache
+			ENABLE_SELECTIVE: For those entities have @Cacheable(true) will be stored in cache
+			DISABLE_SELECTIVE: Cache all entities except of those entities have @Cacheable(false)
+			UNSPECIFIED: Default value
+		
+		 -->
+		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+
+
 		<properties>
 
 			<!-- Configure data source basic information -->
@@ -34,6 +51,15 @@
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 
+			<!-- Second level cache -->
+			<property name="hibernate.cache.use_second_level_cache"
+				value="true" />
+			<property name="hibernate.cache.region.factory_class"
+				value="org.hibernate.cache.ehcache.EhCacheRegionFactory" />
+			<property name="hibernate.cache.use_query_cache" value="true" />
+
 		</properties>
+
+
 	</persistence-unit>
 </persistence>

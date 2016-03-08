@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NamedQuery;
+
+
+@NamedQuery(name="testNamedQuery", query="FROM Customer c WHERE c.id = ?")
+@Cacheable(true)
 @Table(name = "JPA_CUSTOMER")
 @Entity
 public class Customer {
@@ -32,10 +38,21 @@ public class Customer {
 	private Set<Order> orders = new HashSet<>();
 
 	
+	
+	public Customer() {
+		super();
+	}
+
+	public Customer(String lastName, int age) {
+		super();
+		this.lastName = lastName;
+		this.age = age;
+	}
+
 	//Map single 1-n relationship
 	//If at the "one" side use @OneToMany's mappedBy attribute, then cannot use @JoinColumn attribute anymore
 //	@JoinColumn(name="CUSTOMER_ID")
-	@OneToMany(fetch=FetchType.EAGER, cascade={CascadeType.REMOVE},mappedBy="customer")
+	@OneToMany(fetch=FetchType.LAZY, cascade={CascadeType.REMOVE},mappedBy="customer")
 	public Set<Order> getOrders() {
 		return orders;
 	}
